@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a> <a href="/tags/解决ArrayList遍历过程中的ConcurrentModificationException/" style="font-size: 10px;">解决ArrayList遍历过程中的ConcurrentModificationException</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,67 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-java/2016-01-05-ConcurrentModificationException" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/05/java/2016-01-05-ConcurrentModificationException/" class="article-date">
+  	<time datetime="2016-01-04T16:00:00.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/05/java/2016-01-05-ConcurrentModificationException/">解决ArrayList遍历过程中的ConcurrentModificationException</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果我们有一个ArrayList，想要移除其中某一个元素，如果按照常规的list.remove(obj)，那么肯定会抛出<code>ConcurrentModificationException</code>异常。原因是在ArrayList中有一个modCount来记录list结构的改变(主要是list大小的变化)次数，如果在迭代器执行next()方法的时候，发现modCount的值和预期的不一样，那么则会抛出<code>ConcurrentModificationException</code>异常。下面是ArrayList中remove()方法的源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">remove</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; size; index++)</span><br><span class="line">            <span class="keyword">if</span> (elementData[index] == <span class="keyword">null</span>) &#123;</span><br><span class="line">                fastRemove(index);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; size; index++)</span><br><span class="line">            <span class="keyword">if</span> (o.equals(elementData[index])) &#123;</span><br><span class="line">                fastRemove(index);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>其中调用了fastRemove()，接着看fastRemove()方法的源码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fastRemove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</span><br><span class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index,</span><br><span class="line">                         numMoved);</span><br><span class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>我们发现在fastRemove的时候会修改modCount的值。在迭代器进行迭代的时候，执行next()的代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    checkForComodification();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> i = cursor;</span><br><span class="line">        E next = get(i);</span><br><span class="line">        lastRet = i;</span><br><span class="line">        cursor = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException e) &#123;</span><br><span class="line">        checkForComodification();</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>其中<code>checkForComodification()</code>方法的源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>所以很明显，如果直接调用ArrayList的remove()方法，在迭代器取下一个元素的时候会抛出<code>ConcurrentModificationException</code>异常。<br>解决办法：在单线程的环境中，我们可以直接调用迭代器的remove()方法。但是如果在多线程环境中，我么需要用线程安全的集合类，如<code>CopyOnWriteArrayList</code>。如下示例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testConcurrentModException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; listOfPhones = <span class="keyword">new</span> ArrayList&lt;String&gt;(Arrays.asList(</span><br><span class="line">            <span class="string">"iPhone 6S"</span>, <span class="string">"iPhone 6"</span>, <span class="string">"iPhone 5"</span>, <span class="string">"Samsung Galaxy 4"</span>, <span class="string">"Lumia Nokia"</span>));</span><br><span class="line">    System.out.println(<span class="string">"list of phones: "</span> + listOfPhones);</span><br><span class="line">    <span class="comment">// Iterating and removing objects from list</span></span><br><span class="line">    <span class="comment">// This is wrong way, will throw ConcurrentModificationException</span></span><br><span class="line">    <span class="keyword">for</span>(String phone : listOfPhones)&#123;</span><br><span class="line">        <span class="keyword">if</span>(phone.startsWith(<span class="string">"iPhone"</span>))&#123;</span><br><span class="line">            <span class="comment">// listOfPhones.remove(phone); // will throw exception</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// The Right way, iterating elements using Iterator's remove() method</span></span><br><span class="line">    <span class="keyword">for</span>(Iterator&lt;String&gt; itr = listOfPhones.iterator(); itr.hasNext();)&#123;</span><br><span class="line">        String phone = itr.next();</span><br><span class="line">        <span class="keyword">if</span>(phone.startsWith(<span class="string">"iPhone"</span>))&#123;</span><br><span class="line">            <span class="comment">// listOfPhones.remove(phone);  // wrong again</span></span><br><span class="line">            itr.remove(); <span class="comment">// right call</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"list after removal: "</span> + listOfPhones);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/解决ArrayList遍历过程中的ConcurrentModificationException/">解决ArrayList遍历过程中的ConcurrentModificationException</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/java/">java</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-java/2016-01-04-reference" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -755,75 +816,6 @@ Dec 18 12:09:48 133-130-xx-xxx pppd[6402]: Exit.
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/shell/">shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python/2013-08-10-add-screen-forpi" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/08/10/python/2013-08-10-add-screen-forpi/" class="article-date">
-  	<time datetime="2013-08-09T16:00:00.000Z" itemprop="datePublished">2013-08-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/08/10/python/2013-08-10-add-screen-forpi/">给树莓派添加显示屏</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>给树莓派添加一个外部的黑白屏用于显示运行状态，包括温度，内存，cpu使用，ip地址等等，屏幕用诺基亚5100的拆机屏。需要用到一个函数库，在Raspberry Pi的讨论区中已经有人共享了成果<a href="http://www.raspberrypi.org/phpBB3/download/file.php?id=2239&amp;sid=54ab6c13f737d4df57d295afa8bf3752" target="_blank" rel="external">nokimagpi.tar.gz</a>。由于这个程序用到一些modules，需要装一些环境支持:</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-dev</span><br><span class="line">sudo apt-get install python-pip</span><br><span class="line">sudo pip install wiringpi</span><br><span class="line">sudo pip install spidev</span><br><span class="line">sudo pip install pil</span><br></pre></td></tr></table></figure>
-<p>5100显示屏的针脚定义从左到右依次是：RST,CE,DC(D/C),Din(DNK),Clk(SCLK),Vcc,BL(LED),Gnd,总共8根线，将其连接到树莓派的gpio口，对应关系如下(将pi的网口端正对自己，从左往右，依次向下分别为pin 1 2 3…)：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RST ←→ pin <span class="number">11</span></span><br><span class="line">CE (SCE) ←→ pin <span class="number">24</span></span><br><span class="line">DC (D/C)  ←→ pin <span class="number">15</span></span><br><span class="line">Din (DNK) ←→ pin <span class="number">19</span></span><br><span class="line">Clk (SCLK) ←→ pin <span class="number">23</span></span><br><span class="line">Vcc  ←→ pin <span class="number">1</span></span><br><span class="line">BL(LED) ←→ pin <span class="number">12</span></span><br><span class="line">Gnd  ←→ pin <span class="number">6</span></span><br></pre></td></tr></table></figure>
-<p>接下来写脚本调用<code>nokiaSPI.py</code>控制屏幕输出，常用的方法如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nokia.cls()：清除显示</span><br><span class="line">nokia.gotoxy(x, y)：將游标移动到 x, y 指定的位置。</span><br><span class="line">nokia.text(<span class="string">"英文字串"</span>)：在目前的屏幕中显示英文字符。</span><br><span class="line">nokia.led(<span class="number">0</span>)：关闭背光</span><br></pre></td></tr></table></figure>
-<p>需要用到显示相关信息的方法如下，获取内存和CPU占用需要用到psutil包：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#获取IP地址</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getIp</span><span class="params">()</span>:</span></span><br><span class="line">    ipAdd = commands.getstatusoutput(<span class="string">"ifconfig|grep 'inet addr:'|grep -v '127.0.0.1'|awk '&#123;print $2&#125;'|awk -F':' '&#123;print $2&#125;'"</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> ipAdd</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取温度信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getTempurature</span><span class="params">()</span>:</span></span><br><span class="line">	tempurature = str(string.atoi(commands.getstatusoutput(<span class="string">"cat /sys/class/thermal/thermal_zone0/temp"</span>)[<span class="number">1</span>])/<span class="number">1000.0</span>)</span><br><span class="line">	<span class="keyword">return</span> tempurature</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取CPU占用</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getCpuUseage</span><span class="params">()</span>:</span></span><br><span class="line">	cpu = <span class="string">"cpu:"</span>+str(psutil.cpu_percent(<span class="number">0.1</span>))+<span class="string">"%"</span></span><br><span class="line">    <span class="keyword">return</span> cpu</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取内存占用情况</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getMem</span><span class="params">()</span>:</span></span><br><span class="line">    phymem = psutil.phymem_usage()</span><br><span class="line">    buffers = getattr(psutil, <span class="string">'phymem_buffers'</span>, <span class="keyword">lambda</span>: <span class="number">0</span>)()</span><br><span class="line">    cached = getattr(psutil, <span class="string">'cached_phymem'</span>, <span class="keyword">lambda</span>: <span class="number">0</span>)()</span><br><span class="line">    used = phymem.total - (phymem.free + buffers + cached)</span><br><span class="line">    line = <span class="string">"Mem:%s/%s"</span> % (</span><br><span class="line">        str(int(used / <span class="number">1024</span> / <span class="number">1024</span>)) + <span class="string">"M"</span>,</span><br><span class="line">        str(int(phymem.total / <span class="number">1024</span> / <span class="number">1024</span>)) + <span class="string">"M"</span></span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> line</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取开机运行时间</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getUpTime</span><span class="params">()</span>:</span></span><br><span class="line">    time = commands.getstatusoutput(<span class="string">"uptime|awk -F',' '&#123;print $1&#125;'|awk '&#123;print $3&#125;'"</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> time</span><br></pre></td></tr></table></figure>
-<p>运行后的效果<br><img src="/img/pi/screen.jpg" alt="sign"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
 	</div>
 
 
