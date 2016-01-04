@@ -4,20 +4,20 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>使用nginx解决BOTTLE单例 | Hexo</title>
+  <title>使用nginx解决BOTTLE单例 | Kenshin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="bottle的单例访问让人蛋疼，本来就不高的并发，为了解决这种问题想到了nginx代理多端口转发。首先在程序里面将端口改成动态传入,在main.py中修改：123456789import sysimport stringargs = sys.argv#默认args[0]是文件的名字 args[1],[2]等依次是后面跟着的参数port = string.atoi(args[1])  . ..run">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用nginx解决BOTTLE单例">
 <meta property="og:url" content="http://yoursite.com/2013/07/14/shell/2013-07-14-Nginx-MultiPort/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Kenshin">
 <meta property="og:description" content="bottle的单例访问让人蛋疼，本来就不高的并发，为了解决这种问题想到了nginx代理多端口转发。首先在程序里面将端口改成动态传入,在main.py中修改：123456789import sysimport stringargs = sys.argv#默认args[0]是文件的名字 args[1],[2]等依次是后面跟着的参数port = string.atoi(args[1])  . ..run">
 <meta property="og:updated_time" content="2016-01-04T12:17:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用nginx解决BOTTLE单例">
 <meta name="twitter:description" content="bottle的单例访问让人蛋疼，本来就不高的并发，为了解决这种问题想到了nginx代理多端口转发。首先在程序里面将端口改成动态传入,在main.py中修改：123456789import sysimport stringargs = sys.argv#默认args[0]是文件的名字 args[1],[2]等依次是后面跟着的参数port = string.atoi(args[1])  . ..run">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Kenshin" type="application/atom+xml">
   
   
     <link rel="icon" href="/img/favicon.ico">
@@ -38,7 +38,7 @@
 		</a>
 
 		<hgroup>
-		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		  <h1 class="header-author"><a href="/">Kenshin</a></h1>
 		</hgroup>
 
 		
@@ -117,7 +117,7 @@
       <nav id="mobile-nav">
   	<div class="overlay">
   		<div class="slider-trigger"></div>
-  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  		<h1 class="header-author js-mobile-header hide">Kenshin</h1>
   	</div>
 	<div class="intrude-less">
 		<header id="header" class="inner">
@@ -127,7 +127,7 @@
 			
 			</div>
 			<hgroup>
-			  <h1 class="header-author">John Doe</h1>
+			  <h1 class="header-author">Kenshin</h1>
 			</hgroup>
 			
 			<nav class="header-menu">
@@ -277,7 +277,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 John Doe
+    		&copy; 2016 Kenshin
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
