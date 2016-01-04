@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>关于reflection | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于reflection">
+<meta property="og:url" content="http://yoursite.com/2012/12/06/java/2012-12-06-about-reflection/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
+<meta property="og:updated_time" content="2016-01-04T11:55:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于reflection">
+<meta name="twitter:description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+					        
+								<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+					        
+								<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+			        
+						<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+			        
+						<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-java/2012-12-06-about-reflection" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012/12/06/java/2012-12-06-about-reflection/" class="article-date">
+  	<time datetime="2012-12-05T16:00:00.000Z" itemprop="datePublished">2012-12-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于reflection
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflection/">reflection</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/java/">java</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    demo = Class.forName(<span class="string">"mymaven.untitled.person.person"</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception ex)&#123;</span><br><span class="line">    ex.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">person per1= <span class="keyword">null</span>;</span><br><span class="line">person per2 = <span class="keyword">null</span>;</span><br><span class="line">person per3  = <span class="keyword">null</span>;</span><br><span class="line">Constructor&lt;?&gt; constructor[] = demo.getConstructors();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    per1 = (person)constructor[<span class="number">3</span>].newInstance();</span><br><span class="line">    per2 = (person)constructor[<span class="number">1</span>].newInstance(<span class="number">100</span>);</span><br><span class="line">    per3 = (person)constructor[<span class="number">2</span>].newInstance(<span class="string">"gayyzxyx"</span>,<span class="number">23423</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span> (InstantiationException ex)&#123;</span><br><span class="line">ex.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        e.printStackTrace();  <span class="comment">//To change body of catch statement use File | Settings | File Templates.</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">e.printStackTrace();  <span class="comment">//To change body of catch statement use File | Settings | File Templates.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>但是此时有一点需要注意的，constructor的顺序是根据反射的包名里面构造函数的顺序确定，不然程序会抛出以下异常:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.IllegalArgumentException: wrong number of arguments</span><br><span class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</span><br><span class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:<span class="number">39</span>)</span><br><span class="line">    at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:<span class="number">27</span>)</span><br><span class="line">    at java.lang.reflect.Constructor.newInstance(Constructor.java:<span class="number">513</span>)</span><br></pre></td></tr></table></figure><br>如果构造函数默认即不带参数类型，即可获取新实例完成初始化:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">per1 = (person)demo.newInstance()</span><br></pre></td></tr></table></figure><br>可以通过反射调用类中的方法，如果方法没有参数，如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void sayName()&#123;</span><br><span class="line">    &lt;div class=""&gt;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line">.......</span><br><span class="line">try&#123;</span><br><span class="line">    Method method = className.getMethod("sayName");</span><br><span class="line">    method.invoke(className.new Instance());</span><br><span class="line">&#125;catch(Exception e)&#123;&#125;</span><br></pre></td></tr></table></figure><br>对于带参数的方法，在反射的时候要加上参数列表：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    Method method = className.getMethod(<span class="string">"sayName"</span>,String.class,<span class="keyword">int</span>.class);</span><br><span class="line">    method.invoke(className.new Instance(),<span class="string">"gayyzxyx"</span>,<span class="number">1234</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/12/11/java/2012-12-11-Multiply-thread/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JAVA多线程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/12/01/regex/2012-12-31-RegEx/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RegEx</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="java/2012-12-06-about-reflection" data-title="关于reflection" data-url="http://yoursite.com/2012/12/06/java/2012-12-06-about-reflection/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 John Doe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

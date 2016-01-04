@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>LINUX下GREP简易用法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Usage: grep [OPTION]… PATTERN [FILE]…Search for PATTERN in each FILE or standard input.PATTERN is, by default, a basic regular expression (BRE).Example: grep -i ‘hello world’ menu.h main.c
+1.-A NUM 显示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LINUX下GREP简易用法">
+<meta property="og:url" content="http://yoursite.com/2013/06/18/shell/2013-06-18-grep/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Usage: grep [OPTION]… PATTERN [FILE]…Search for PATTERN in each FILE or standard input.PATTERN is, by default, a basic regular expression (BRE).Example: grep -i ‘hello world’ menu.h main.c
+1.-A NUM 显示">
+<meta property="og:updated_time" content="2016-01-04T12:17:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LINUX下GREP简易用法">
+<meta name="twitter:description" content="Usage: grep [OPTION]… PATTERN [FILE]…Search for PATTERN in each FILE or standard input.PATTERN is, by default, a basic regular expression (BRE).Example: grep -i ‘hello world’ menu.h main.c
+1.-A NUM 显示">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">John Doe</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+					        
+								<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+					        
+								<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">John Doe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">John Doe</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+			        
+						<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+			        
+						<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-shell/2013-06-18-grep" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/06/18/shell/2013-06-18-grep/" class="article-date">
+  	<time datetime="2013-06-17T16:00:00.000Z" itemprop="datePublished">2013-06-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LINUX下GREP简易用法
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/shell/">shell</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Usage: grep [OPTION]… PATTERN [FILE]…Search for PATTERN in each FILE or standard input.PATTERN is, by default, a basic regular expression (BRE).Example: grep -i ‘hello world’ menu.h main.c</strong></p>
+<p>1.-A NUM 显示匹配行下的NUM行:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@core /home/download<span class="comment"># grep -A 1 bash download_chrome.sh</span></span><br><span class="line">!bin/bash</span><br><span class="line">VERSION=<span class="string">"curl http://commondatastorage.googleapis.com/chromium-browser-continuous/Win/LAST_CHANGE"</span></span><br></pre></td></tr></table></figure><br>2.-a 搜寻二进制档案中文本</p>
+<p>3.-B NUM 显示匹配行以上的NUM行:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@core /home/download<span class="comment"># grep -B 1 VERSION download_chrome.sh</span></span><br><span class="line">!bin/bash</span><br><span class="line">VERSION=<span class="string">"curl http://commondatastorage.googleapis.com/chromium-browser-continuous/Win/LAST_CHANGE"</span></span><br></pre></td></tr></table></figure><br>4.-C [NUM] 列出匹配行上下各NUM行</p>
+<p>5.-b 列出之前文本总共多少byte</p>
+<p>6.-c 显示符合条件的总行数</p>
+<p>7.-E 采用正则表达式:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@core /home/download<span class="comment"># grep -E 'win[0-9]&#123;2&#125;'  download_chrome.sh</span></span><br><span class="line">wget -o /home/download/chome-<span class="variable">$VERSION</span> http://commondatastorage.googleapis.com/chromium-browser-continuous/W<span class="keyword">in</span>/<span class="variable">$VERSION</span>/chrome-win32.zip</span><br></pre></td></tr></table></figure><br>8.-f newfile 将匹配样式写入newfile，然后grep -f newfile data进行查找</p>
+<p>9.-H 会带出匹配到的每一条记录的文件名字如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@core /home/download<span class="comment"># grep -H wget download_chrome.sh wget	</span></span><br><span class="line">download_chrome.sh:wget -o /home/download/chome-<span class="variable">$VERSION</span> http://commondatastorage.googleapis.com/chromium-browser-continuous/W<span class="keyword">in</span>/<span class="variable">$VERSION</span>/chrome-win32.zip</span><br><span class="line">wget:wget -o /home/download/chome-<span class="variable">$VERSION</span> http://commondatastorage.googleapis.c</span><br></pre></td></tr></table></figure><br>10.-i 忽略大小写</p>
+<p>11.-L 不显示出符合匹配的文件名称</p>
+<p>12.-l 显示出符合匹配的文件名称</p>
+<p>13.-n 标注当前行号</p>
+<p>14.-r 递归的读出所有资料下的所有档案</p>
+<p>15.-v 显示出了搜寻样式之外的全部:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@core /home/download<span class="comment"># grep -v wget download_chrome.sh | grep VERSION</span></span><br><span class="line">VERSION=<span class="string">"curl http://commondatastorage.googleapis.com/chromium-browser-continuous/Win/LAST_CHANGE"</span></span><br></pre></td></tr></table></figure><br>16.-w 将搜寻样式视为一个字去搜索</p>
+<p>17.-x 将搜索样式视为一整行去搜索</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/07/14/shell/2013-07-14-Nginx-MultiPort/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          使用nginx解决BOTTLE单例
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/04/22/python/2013-04-22-python-django/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">搭建简易web框架django</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="shell/2013-06-18-grep" data-title="LINUX下GREP简易用法" data-url="http://yoursite.com/2013/06/18/shell/2013-06-18-grep/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 John Doe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
