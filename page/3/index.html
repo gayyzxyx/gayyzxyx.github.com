@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,77 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-python/2012-12-28-python-string.maketrans()-translate()" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012/12/28/python/2012-12-28-python-string.maketrans()-translate()/" class="article-date">
+  	<time datetime="2012-12-27T16:00:00.000Z" itemprop="datePublished">2012-12-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/12/28/python/2012-12-28-python-string.maketrans()-translate()/">python中关于string.maketrans()和translate</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先看string.maketrans的定义<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maketrans</span><span class="params">(frm, to)</span>:</span> <span class="comment"># real signature unknown; restored from __doc__</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    maketrans(frm, to) -&gt; string</span><br><span class="line">    </span><br><span class="line">    Return a translation table (a string of 256 bytes long)</span><br><span class="line">    suitable for use in string.translate.  The strings frm and to</span><br><span class="line">    must be of the same length.</span><br><span class="line">    """</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">""</span></span><br></pre></td></tr></table></figure><br>意思是说创建一个转义表(长度为256字节)，在translate的时候根据转义表的内容重新转义字符串内容，并且frm和to的长度相等，并且这个转移模板是给translate用，translate的定义如下<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">translate</span><span class="params">(self, table, deletechars=None)</span>:</span> <span class="comment"># real signature unknown; restored from __doc__</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        S.translate(table [,deletechars]) -&gt; string</span><br><span class="line">        </span><br><span class="line">        Return a copy of the string S, where all characters occurring</span><br><span class="line">        in the optional argument deletechars are removed, and the</span><br><span class="line">        remaining characters have been mapped through the given</span><br><span class="line">        translation table, which must be a string of length 256 or None.</span><br><span class="line">        If the table argument is None, no translation is applied and</span><br><span class="line">        the operation simply removes the characters in deletechars.</span><br><span class="line">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br></pre></td></tr></table></figure><br>意思是说返回字符串S的copy t,并且里面的字符串都是除掉参数[,deletechars]中的字符串后的新字符串，t中内容根据转义表相匹配。光看字面意思有点抽象，写段代码试验<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">s = <span class="string">'i am a good boy'</span></span><br><span class="line">t = string.maketrans(<span class="string">'abc'</span>,<span class="string">'ABC'</span>)</span><br><span class="line">print(s.translate(t))</span><br></pre></td></tr></table></figure><br>将‘i am a good boy’中出现的abc换成大写的ABC，结果如下：</p>
+<pre><code>i Am A good Boy
+</code></pre><p>可以在translate中增加输出过滤参数，比如过滤掉‘am<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">s = <span class="string">'i am a good boy'</span></span><br><span class="line">t = string.maketrans(<span class="string">'abc'</span>,<span class="string">'ABC'</span>)</span><br><span class="line">print(s.translate(t,<span class="string">'am'</span>))</span><br></pre></td></tr></table></figure><br>得到过滤后的字符串这样：</p>
+<pre><code>i   good Boy
+</code></pre><p>如果string.maketrans()带上空参数会是怎样呢？<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line">s = <span class="string">'i am a good boy'</span></span><br><span class="line">t = string.maketrans(<span class="string">''</span>,<span class="string">''</span>)</span><br><span class="line">print(s.translate(t,<span class="string">'am'</span>))</span><br></pre></td></tr></table></figure><br>output:</p>
+<pre><code>i   good boy
+</code></pre><p>其作用跟直接删除参数<code>[,deletechars]</code>中出现字符一样效果</p>
+<p>接下来一个用一个例子完结，这是<a href="http://www.pythonchallenge.com/pc/def/map.html" target="_blank" rel="external">pythonchallenge</a>上一个有意思的题目。给我们一个字符串，我们将每个字符向后位移两个字符的距离，如果是y位移两个后就变成了a,如果是z位移两个后就变成了b，以此类推。此种问题就可以借助string.maketrans(from,to)完成，from是原256个字符串的模板，目标模板是<code>from[2:]+from[:2]</code>，如abcd位移后是cdab<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"""g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq</span><br><span class="line">glcddgagclr ylb rfyr'q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu</span><br><span class="line">ynnjw ml rfc spj."""</span></span><br><span class="line">l=string.lowercase</span><br><span class="line">t=string.maketrans(l,l[<span class="number">2</span>:]+l[:<span class="number">2</span>])</span><br><span class="line">news = s.translate(t)</span><br><span class="line">print(news)</span><br></pre></td></tr></table></figure><br>output:</p>
+<pre><code>i hope you didnt translate it by hand. thats what computers are for. doing it in by hand is
+inefficient and that&apos;s why this text is so long. using string.maketrans() is recommended. now
+apply on the url.
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/maketrans/">maketrans</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/translate/">translate</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/python/">python</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-java/2012-12-11-Multiply-thread" class="article article-type-post" itemscope itemprop="blogPost">
   
