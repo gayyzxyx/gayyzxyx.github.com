@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 12px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Netty/" style="font-size: 14px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 16px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,76 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-shell/2014-02-27-linux-date-syn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/02/27/shell/2014-02-27-linux-date-syn/" class="article-date">
+  	<time datetime="2014-02-26T16:00:00.000Z" itemprop="datePublished">2014-02-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/27/shell/2014-02-27-linux-date-syn/">解决debian时间差8小时</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.更改时区</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Asia/Shanghai"</span> &gt; /etc/timezone</span><br></pre></td></tr></table></figure>
+
+2\.根据时区覆盖原有的localtime文件
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/localtime /etc/localtime.bak</span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/</span><br><span class="line">mv /etc/Shanghai /etc/localtime</span><br></pre></td></tr></table></figure>
+<p>3.查看rcS文件中是否有UTC</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/default/rcS</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"UTC=no"</span> &gt;&gt; /etc/default/rcS</span><br></pre></td></tr></table></figure>
+<p>4.<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ntpdate</span><br></pre></td></tr></table></figure></p>
+<p>5.更新时间<code>ntpdate ntp.fudan.edu.cn</code> ,如果提示错误，执行<code>service ntp stop</code>, 然后<code>ntpdate ntp.fudan.edu.cn</code>，然后date看下时间就妥妥的了</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/date/">date</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/shell/">shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-python/2013-10-06-file-synchronise" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1212,67 +1282,6 @@ To install this user certificate, please save this e-mail message into the follo
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/awk/">awk</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sed/">sed</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/shell/">shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-shell/2013-02-21-Vim-Chinese-Garbled" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/02/21/shell/2013-02-21-Vim-Chinese-Garbled/" class="article-date">
-  	<time datetime="2013-02-20T16:00:00.000Z" itemprop="datePublished">2013-02-21</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/02/21/shell/2013-02-21-Vim-Chinese-Garbled/">vim在windows下中文乱码</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<code>windows</code>下用<code>vim</code>编辑带中文字符的文件时会出现中文乱码问题，这是只需要编辑<code>vim</code>安装目录下<code>_vimrc</code>，在文件最开始加入以下两行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> &amp;termencoding=&amp;encoding</span><br><span class="line"><span class="built_in">set</span> fileencodings=utf-<span class="number">8</span>,gbk,ucs-bom,cp936</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
 	</div>
 
       
