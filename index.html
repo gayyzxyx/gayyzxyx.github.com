@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,67 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-java/2016-01-09-nettybio_1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/09/java/2016-01-09-nettybio_1/" class="article-date">
+  	<time datetime="2016-01-08T16:00:00.000Z" itemprop="datePublished">2016-01-09</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/09/java/2016-01-09-nettybio_1/">Netty-IO-伪异步IO</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在传统的<a href="/2016/01/07/nettybio/2016-01-07-nettybio/">同步阻塞IO</a>中的问题，我我们可以通过线程池的方式去解决，在server端，所有client的请求进来都提交到线程池，然后去集中执行。改写后的server代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeServerWithExecutePool</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> port = <span class="number">8080</span>;</span><br><span class="line">        ServerSocket serverSocket = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            serverSocket = <span class="keyword">new</span> ServerSocket(port);</span><br><span class="line">            System.out.println(<span class="string">"the time server is start on port: "</span> + port);</span><br><span class="line">            Socket socket = <span class="keyword">null</span>;</span><br><span class="line">            ExecutorService executorService = <span class="keyword">new</span> ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() + <span class="number">1</span>, <span class="number">50</span>, <span class="number">120L</span>, TimeUnit.SECONDS, <span class="keyword">new</span> ArrayBlockingQueue&lt;Runnable&gt;(<span class="number">1000</span>));</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                socket = serverSocket.accept();</span><br><span class="line">                executorService.execute(<span class="keyword">new</span> TimeServerHandler(socket));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (serverSocket != <span class="keyword">null</span>) &#123;</span><br><span class="line">                System.out.println(<span class="string">"The Time Server close"</span>);</span><br><span class="line">                serverSocket.close();</span><br><span class="line">                serverSocket = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>其中初始化了一个corePoolSize为cpu数量+1、maximumPoolSize为50、阻塞队列长度为1000的线程池。关于ThreadPoolExecutor构造函数中的参数的解释如下：<br>corePoolSize：如果当前线程池的县城数量少于corePoolSize，每进来一个任务都会创建一个worker，即使线程池中的其他worker是空闲的<br>maximumPoolSize：仅当workQueue满了后，当前线程池中的线程数量小于maximumPoolSize，则会创建新的worker，不然则会创建失败，调用RejectedExecutionHandler：handler处理失败情况<br>workQueue：如果当前线程池的线程数量超过corePoolSize，则会将任务加入阻塞队列中<br>handler：当线程池满了创建线程失败的处理方法<br>由于加上了有界的线程池处理，当client的连接数膨胀也能在一定程度上缓解压力，算是传统模型的一种改进。但是此种方法并没有从根本上解决问题，得需要NIO加持。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BIO/">BIO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/">Netty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/java/">java</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-java/2016-01-07-nettybio" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -734,71 +795,6 @@ Dec 18 12:09:48 133-130-xx-xxx pppd[6402]: Exit.
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/shell/">shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python/2013-10-06-file-synchronise" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/10/06/python/2013-10-06-file-synchronise/" class="article-date">
-  	<time datetime="2013-10-05T16:00:00.000Z" itemprop="datePublished">2013-10-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/10/06/python/2013-10-06-file-synchronise/">文件同步</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有时候需要用到文件同步将本地文件与远程文件保持一致，可以是全量的，也可以是增量的，于是用py简单撸了下。简单来说就是遍历当前文件夹，如果当前是文件则检测目标文件夹中是否存在该文件，不存在就复制；如果检测到的是文件夹，则递归检测子文件夹，核心如下：</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Syn</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, dPath)</span>:</span></span><br><span class="line">        self.sPath = os.getcwd()</span><br><span class="line">        self.dPath = dPath</span><br><span class="line">        self.absFolder = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">copyFile</span><span class="params">(self, path)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> os.listdir(path):</span><br><span class="line">            <span class="keyword">if</span> os.path.isfile(os.path.join(path, i)):</span><br><span class="line">                sourceFile = os.path.join(os.path.join(self.sPath, self.absFolder), i)</span><br><span class="line">                targetFile = os.path.join(os.path.join(self.dPath , self.absFolder), i)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> (os.path.exists(targetFile) <span class="keyword">and</span> os.path.getsize(targetFile) == os.path.getsize(sourceFile)):</span><br><span class="line">                    open(targetFile, <span class="string">"wb"</span>).write(open(sourceFile, <span class="string">"rb"</span>).read())</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                targetPath = os.path.join(os.path.join(self.dPath, self.absFolder), i)</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(targetPath):</span><br><span class="line">                    self.absFolder = os.path.join(self.absFolder, i)</span><br><span class="line">                    os.makedirs(targetPath)</span><br><span class="line">                    self.copyFile(os.path.join(self.sPath, self.absFolder))</span><br><span class="line">                    self.absFolder = os.path.split(self.absFolder)[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self.absFolder = os.path.join(self.absFolder, i)</span><br><span class="line">                    self.copyFile(os.path.join(self.sPath, self.absFolder))</span><br><span class="line">                    self.absFolder = os.path.split(self.absFolder)[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<p>对了全量同步，只需要在同步前把目标文件夹给删除掉。在程序运行前带入参数。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">   target = sys.argv[<span class="number">2</span>].decode(<span class="string">"utf-8"</span>).encode(<span class="string">"gbk"</span>)</span><br><span class="line">   <span class="keyword">if</span> sys.argv[<span class="number">1</span>]==<span class="string">"all"</span>:</span><br><span class="line">       <span class="keyword">for</span> file <span class="keyword">in</span> os.listdir(target):</span><br><span class="line">           <span class="keyword">try</span>:</span><br><span class="line">               <span class="keyword">if</span> os.path.isfile(os.path.join(target, file)):</span><br><span class="line">                   os.remove(os.path.join(target, file))</span><br><span class="line">               <span class="keyword">else</span>:</span><br><span class="line">                   os.system(<span class="string">'rd /S /Q %s'</span>% os.path.join(target, file))</span><br><span class="line">           <span class="keyword">except</span> Exception,e:</span><br><span class="line">               <span class="keyword">print</span> e, file</span><br><span class="line">   syn = Syn(target)</span><br><span class="line">   syn.copyFile(os.getcwd())</span><br><span class="line">   <span class="keyword">print</span> <span class="string">"success"</span></span><br></pre></td></tr></table></figure>
-<p>核心代码不超过20行，但是为日常应用带来了很大的方便。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
 	</div>
 
 

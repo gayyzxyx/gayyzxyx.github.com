@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Kenshin">
 <meta property="og:description" content="Java中IO分为NIO和IO(BIO)。在BIO的通信模型中，通常会有一个accepter线程负责接收客户端的链接，接收到后会为每一个客户端请求创建一个线程新的线程进行处理，并且在处理完成后通过输出流返回给客户端。该模型可用以下图片简要描述：先看代码上怎么实现，先实现Server端的123456789101112131415161718192021public class BioTimeServ">
 <meta property="og:image" content="http://yoursite.com/img/other/bio-image.png">
-<meta property="og:updated_time" content="2016-01-07T02:40:26.000Z">
+<meta property="og:updated_time" content="2016-01-07T13:53:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty-IO-BIO">
 <meta name="twitter:description" content="Java中IO分为NIO和IO(BIO)。在BIO的通信模型中，通常会有一个accepter线程负责接收客户端的链接，接收到后会为每一个客户端请求创建一个线程新的线程进行处理，并且在处理完成后通过输出流返回给客户端。该模型可用以下图片简要描述：先看代码上怎么实现，先实现Server端的123456789101112131415161718192021public class BioTimeServ">
@@ -100,7 +100,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BIO/" style="font-size: 10px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 10px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Netty/" style="font-size: 12.5px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -208,6 +208,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/01/09/java/2016-01-09-nettybio_1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Netty-IO-伪异步IO
+        
+      </div>
+    </a>
   
   
     <a href="/2016/01/05/java/2016-01-05-ConcurrentModificationException/" id="article-nav-older" class="article-nav-link-wrap">
