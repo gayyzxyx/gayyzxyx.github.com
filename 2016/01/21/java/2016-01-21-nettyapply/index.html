@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>关于reflection | Kenshin</title>
+  <title>Netty应用及粘包解决 | Kenshin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
+  <meta name="description" content="用jdk自带的nio创建一个非阻塞的网络应用是很费时间和精力的事情，如服务端，要创建ServerSocketChannel、要绑定监听、要创建多路复用器、要写轮询事件等等，一个简单的NIO服务端需要10多道工序。用Netty的话，可以轻松的简化为1234567891011121314151617181920212223242526272829public class TimeServer &amp;#12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于reflection">
-<meta property="og:url" content="http://yoursite.com/2012/12/06/java/2012-12-06-about-reflection/index.html">
+<meta property="og:title" content="Netty应用及粘包解决">
+<meta property="og:url" content="http://yoursite.com/2016/01/21/java/2016-01-21-nettyapply/index.html">
 <meta property="og:site_name" content="Kenshin">
-<meta property="og:description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
-<meta property="og:updated_time" content="2016-01-04T11:55:20.000Z">
+<meta property="og:description" content="用jdk自带的nio创建一个非阻塞的网络应用是很费时间和精力的事情，如服务端，要创建ServerSocketChannel、要绑定监听、要创建多路复用器、要写轮询事件等等，一个简单的NIO服务端需要10多道工序。用Netty的话，可以轻松的简化为1234567891011121314151617181920212223242526272829public class TimeServer &amp;#12">
+<meta property="og:updated_time" content="2016-01-21T16:53:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于reflection">
-<meta name="twitter:description" content="用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：1234567891011121314151617181920try&amp;#123;    demo = Class.forName(&quot;mymaven.untitled.person.person&quot;);&amp;#125;catch (Exception ex)&amp;#123;    ex.printSta">
+<meta name="twitter:title" content="Netty应用及粘包解决">
+<meta name="twitter:description" content="用jdk自带的nio创建一个非阻塞的网络应用是很费时间和精力的事情，如服务端，要创建ServerSocketChannel、要绑定监听、要创建多路复用器、要写轮询事件等等，一个简单的NIO服务端需要10多道工序。用Netty的话，可以轻松的简化为1234567891011121314151617181920212223242526272829public class TimeServer &amp;#12">
   
     <link rel="alternative" href="/atom.xml" title="Kenshin" type="application/atom+xml">
   
@@ -155,11 +155,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-java/2012-12-06-about-reflection" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-java/2016-01-21-nettyapply" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2012/12/06/java/2012-12-06-about-reflection/" class="article-date">
-  	<time datetime="2012-12-05T16:00:00.000Z" itemprop="datePublished">2012-12-06</time>
+      <a href="/2016/01/21/java/2016-01-21-nettyapply/" class="article-date">
+  	<time datetime="2016-01-20T16:00:00.000Z" itemprop="datePublished">2016-01-21</time>
 </a>
     </div>
   
@@ -172,7 +172,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      关于reflection
+      Netty应用及粘包解决
     </h1>
   
 
@@ -181,7 +181,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflection/">reflection</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NIO/">NIO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Netty/">Netty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
 	</div>
 
         
@@ -196,7 +196,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>用反射进行对象初始化的时候，可以参考构造函数，如果默认构造函数的参数不为空的话需要先取得全部构造函数，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    demo = Class.forName(<span class="string">"mymaven.untitled.person.person"</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span> (Exception ex)&#123;</span><br><span class="line">    ex.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line">person per1= <span class="keyword">null</span>;</span><br><span class="line">person per2 = <span class="keyword">null</span>;</span><br><span class="line">person per3  = <span class="keyword">null</span>;</span><br><span class="line">Constructor&lt;?&gt; constructor[] = demo.getConstructors();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    per1 = (person)constructor[<span class="number">3</span>].newInstance();</span><br><span class="line">    per2 = (person)constructor[<span class="number">1</span>].newInstance(<span class="number">100</span>);</span><br><span class="line">    per3 = (person)constructor[<span class="number">2</span>].newInstance(<span class="string">"gayyzxyx"</span>,<span class="number">23423</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span> (InstantiationException ex)&#123;</span><br><span class="line">ex.printStackTrace();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">        e.printStackTrace();  <span class="comment">//To change body of catch statement use File | Settings | File Templates.</span></span><br><span class="line">    &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">e.printStackTrace();  <span class="comment">//To change body of catch statement use File | Settings | File Templates.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>但是此时有一点需要注意的，constructor的顺序是根据反射的包名里面构造函数的顺序确定，不然程序会抛出以下异常:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread <span class="string">"main"</span> java.lang.IllegalArgumentException: wrong number of arguments</span><br><span class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</span><br><span class="line">    at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:<span class="number">39</span>)</span><br><span class="line">    at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:<span class="number">27</span>)</span><br><span class="line">    at java.lang.reflect.Constructor.newInstance(Constructor.java:<span class="number">513</span>)</span><br></pre></td></tr></table></figure><br>如果构造函数默认即不带参数类型，即可获取新实例完成初始化:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">per1 = (person)demo.newInstance()</span><br></pre></td></tr></table></figure><br>可以通过反射调用类中的方法，如果方法没有参数，如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void sayName()&#123;</span><br><span class="line">    &lt;div class=""&gt;&lt;/div&gt;</span><br><span class="line">&#125;</span><br><span class="line">.......</span><br><span class="line">try&#123;</span><br><span class="line">    Method method = className.getMethod("sayName");</span><br><span class="line">    method.invoke(className.new Instance());</span><br><span class="line">&#125;catch(Exception e)&#123;&#125;</span><br></pre></td></tr></table></figure><br>对于带参数的方法，在反射的时候要加上参数列表：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    Method method = className.getMethod(<span class="string">"sayName"</span>,String.class,<span class="keyword">int</span>.class);</span><br><span class="line">    method.invoke(className.new Instance(),<span class="string">"gayyzxyx"</span>,<span class="number">1234</span>);</span><br><span class="line">&#125;<span class="keyword">catch</span>(Exception e)&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>用jdk自带的nio创建一个非阻塞的网络应用是很费时间和精力的事情，如服务端，要创建ServerSocketChannel、要绑定监听、要创建多路复用器、要写轮询事件等等，一个简单的NIO服务端需要10多道工序。用Netty的话，可以轻松的简化为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bind</span><span class="params">(<span class="keyword">int</span> port)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//配置NIO线程组</span></span><br><span class="line">        EventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        EventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ServerBootstrap bootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">            bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)</span><br><span class="line">                    .option(ChannelOption.SO_BACKLOG, <span class="number">1024</span>).childHandler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                <span class="annotation">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                    ch.pipeline().addLast(<span class="keyword">new</span> TimeServerHandler());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="comment">//绑定端口, 同步等待成功</span></span><br><span class="line">            ChannelFuture future = bootstrap.bind(port).sync();</span><br><span class="line">            <span class="comment">//等待服务端监听端口关闭</span></span><br><span class="line">            future.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">//优雅退出, 释放线程资源</span></span><br><span class="line">            bossGroup.shutdownGracefully();</span><br><span class="line">            workerGroup.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> TimeServer().bind(<span class="number">8080</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>首先启动两个<code>NioEventLoopGroup</code>线程组，分别用于接受client的连接和进行SocketChannel读写。</p>
 
       
     </div>
@@ -206,18 +206,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2012/12/11/java/2012-12-11-Multiply-thread/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          JAVA多线程
-        
-      </div>
-    </a>
   
-  
-    <a href="/2012/12/01/regex/2012-12-31-RegEx/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RegEx</div>
+    <a href="/2016/01/10/java/2016-01-10-nettynio/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Netty-NIO入门</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -252,7 +243,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java/2012-12-06-about-reflection" data-title="关于reflection" data-url="http://yoursite.com/2012/12/06/java/2012-12-06-about-reflection/"></div>
+	<div class="ds-thread" data-thread-key="java/2016-01-21-nettyapply" data-title="Netty应用及粘包解决" data-url="http://yoursite.com/2016/01/21/java/2016-01-21-nettyapply/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
