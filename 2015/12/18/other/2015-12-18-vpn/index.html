@@ -6,23 +6,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>搭梯子姿势界定 | Kenshin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
+  <meta name="description" content="shadowsocks受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
 Dec 18 12:09:18 133-130-xx-xxx pptpd[6401]: CTRL: Client 120.132.35.131 control connection started
-Dec 18 12:09:18 133-130-xx-xxx">
+Dec 18 12:09:18 133">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搭梯子姿势界定">
 <meta property="og:url" content="http://yoursite.com/2015/12/18/other/2015-12-18-vpn/index.html">
 <meta property="og:site_name" content="Kenshin">
-<meta property="og:description" content="受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
+<meta property="og:description" content="shadowsocks受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
 Dec 18 12:09:18 133-130-xx-xxx pptpd[6401]: CTRL: Client 120.132.35.131 control connection started
-Dec 18 12:09:18 133-130-xx-xxx">
+Dec 18 12:09:18 133">
 <meta property="og:image" content="http://yoursite.com/img/other/pptp_error_1.jpeg">
-<meta property="og:updated_time" content="2016-01-04T12:21:56.000Z">
+<meta property="og:image" content="http://yoursite.com/img/other/socks5.jpg">
+<meta property="og:updated_time" content="2016-01-29T05:29:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="搭梯子姿势界定">
-<meta name="twitter:description" content="受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
+<meta name="twitter:description" content="shadowsocks受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：
 Dec 18 12:09:18 133-130-xx-xxx pptpd[6401]: CTRL: Client 120.132.35.131 control connection started
-Dec 18 12:09:18 133-130-xx-xxx">
+Dec 18 12:09:18 133">
   
     <link rel="alternative" href="/atom.xml" title="Kenshin" type="application/atom+xml">
   
@@ -203,7 +204,7 @@ Dec 18 12:09:18 133-130-xx-xxx">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：</p>
+        <h2 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h2><p>受够了GFW的孽性，忍无可忍之下强迫自建梯子。买的conoha的vps，但是发现用它在搭建pptp服务的时候，一直连不上，错误的log如下：</p>
 <pre><code>Dec 18 12:09:18 133-130-xx-xxx pptpd[6401]: CTRL: Client 120.132.35.131 control connection started
 Dec 18 12:09:18 133-130-xx-xxx pptpd[6401]: CTRL: Starting call (launching pppd, opening GRE)
 Dec 18 12:09:18 133-130-xx-xxx pppd[6402]: Plugin /usr/lib/pptpd/pptpd-logwtmp.so loaded.
@@ -227,6 +228,7 @@ Dec 18 12:09:48 133-130-xx-xxx pppd[6402]: Exit.
     &quot;method&quot;:&quot;aes-256-cfb&quot;          #加密方式，选择aes-256-cfb安全性较强
 }
 </code></pre><p>5.启动<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/shadowsocks start</span><br></pre></td></tr></table></figure></p>
+<h2 id="socks5"><a href="#socks5" class="headerlink" title="socks5"></a>socks5</h2><p>也可以通过ssh端口转发，系统设置socks5代理<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -D <span class="number">7070</span> root@<span class="number">133.130</span>.<span class="number">57.222</span></span><br></pre></td></tr></table></figure><br>然后在系统代码的地方设置socks5,连接本地ip:port,如127.0.0.1:7070<br><img src="/img/other/socks5.jpg" alt="socks5" width="100%"><br>这样就可以愉快上网了，通过chrome插件可以实现自动代理。</p>
 
       
     </div>
