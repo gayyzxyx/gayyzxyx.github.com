@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BIO/" style="font-size: 13.33px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 13.33px;">NIO</a> <a href="/tags/Netty/" style="font-size: 16.67px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 13.33px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 16.67px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 13.33px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 12.5px;">NIO</a> <a href="/tags/Netty/" style="font-size: 15px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 12.5px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,67 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-shell/2016-01-31-ssh-tunnel" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/31/shell/2016-01-31-ssh-tunnel/" class="article-date">
+  	<time datetime="2016-01-30T16:00:00.000Z" itemprop="datePublished">2016-01-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/31/shell/2016-01-31-ssh-tunnel/">ssh内网穿透</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们都知道现在公网的IPv4地址是没有免费的，租用一个年费不菲，为了解决这种问题，可以通过ssh的隧道，在本地开一个端口，远程server开一个端口，建立起隧道，这样外部链接到server的端口就相当于转发到了局域网的端口，说干就干。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -qnfNT -g -R <span class="number">2000</span>:<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">4000</span> name@vpshost -p port</span><br></pre></td></tr></table></figure><br>上面命令的作用是简历本地端口4000到vps远程端口2000的映射，这样在vps上通过2000端口也就可以直接访问到本地端口2000的内容，接下面再将vps的2000端口通过TCP转发出去，借助变态的<code>socat</code>工具<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat TCP4-LISTEN:<span class="number">8000</span>,reuseaddr,fork TCP4:localhost:<span class="number">2000</span></span><br></pre></td></tr></table></figure><br>这样通过其他机器访问vpshost:8000就直接到内网机器的4000端口了。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/shell/">shell</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-java/2016-01-21-nettyapply" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -730,68 +791,6 @@ MultiplexerTimeServer实现Runnable接口，主要是Reactor线程轮训注册�
     <div class="article-entry" itemprop="articleBody">
       
         <p>有时候需要修改分支名称，但是总是几条命令切来切去麻烦，于是写了个简单的脚本如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> [[ ! <span class="operator">-d</span> <span class="string">".git"</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"不是有效git目录"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$#</span>"</span> <span class="operator">-ne</span> <span class="number">1</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"新分支名必填"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">branch_old=`git status|grep <span class="string">"On branch"</span>|awk <span class="string">'&#123;print $3&#125;'</span>`</span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$branch_old</span>"</span> = <span class="string">"master"</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"不能对master操作"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">git branch -m <span class="variable">$branch_old</span> <span class="variable">$1</span></span><br><span class="line">git push origin :<span class="variable">$branch_old</span></span><br><span class="line">git push origin <span class="variable">$1</span></span><br></pre></td></tr></table></figure><br>然后配置到环境变量，需要的时候git-rename branchname即可</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/shell/">shell</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-shell/2015-12-22-del-nulltext" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/22/shell/2015-12-22-del-nulltext/" class="article-date">
-  	<time datetime="2015-12-21T16:00:00.000Z" itemprop="datePublished">2015-12-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/22/shell/2015-12-22-del-nulltext/">关于去除空行以及行截断</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在处理文档的时候有时候中间会有空行，这时候需要将其去除，有以下几种办法</p>
-<p>1.grep<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -v <span class="string">"^$"</span> filename</span><br></pre></td></tr></table></figure><br>2.sed<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat filename|sed <span class="string">'/^$/d'</span></span><br></pre></td></tr></table></figure><br>3.tr(不推荐，会保留第一个)<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat filename|tr <span class="operator">-s</span> <span class="string">'\n'</span></span><br></pre></td></tr></table></figure><br>4.awk<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat filename|awk <span class="string">'&#123;if($0!="")print&#125;'</span></span><br></pre></td></tr></table></figure><br>处理完后，还会将每一行按照一定规则进行截断，这是进行cut处理就行了<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut <span class="operator">-d</span> <span class="string">"分隔符"</span> <span class="operator">-f</span> 段</span><br></pre></td></tr></table></figure><br>比如将1155068178\处理成1155068178，只需要写成这样<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut <span class="operator">-d</span> <span class="string">"\\"</span> <span class="operator">-f</span> <span class="number">1</span></span><br></pre></td></tr></table></figure></p>
 
       
     </div>
