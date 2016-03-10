@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>新建modal，保持背景不可滑动 | Kenshin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="需要一个模态框，在移动设备上，弹出模态框后，背景不可滑动，并且点击模态背景后，能返回弹出模态框之前的状态，经过一系列实验，以下是比较好的解决方案，在ios和安卓上都试验无问题首先定义模态框的样式如下：1234567891011121314151617181920212223#modal-overlay &amp;#123;    visibility: hidden;    position: absol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新建modal，保持背景不可滑动">
+<meta property="og:url" content="http://yoursite.com/2016/12/06/fe/2016-03-10-modal/index.html">
+<meta property="og:site_name" content="Kenshin">
+<meta property="og:description" content="需要一个模态框，在移动设备上，弹出模态框后，背景不可滑动，并且点击模态背景后，能返回弹出模态框之前的状态，经过一系列实验，以下是比较好的解决方案，在ios和安卓上都试验无问题首先定义模态框的样式如下：1234567891011121314151617181920212223#modal-overlay &amp;#123;    visibility: hidden;    position: absol">
+<meta property="og:updated_time" content="2016-03-10T13:38:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新建modal，保持背景不可滑动">
+<meta name="twitter:description" content="需要一个模态框，在移动设备上，弹出模态框后，背景不可滑动，并且点击模态背景后，能返回弹出模态框之前的状态，经过一系列实验，以下是比较好的解决方案，在ios和安卓上都试验无问题首先定义模态框的样式如下：1234567891011121314151617181920212223#modal-overlay &amp;#123;    visibility: hidden;    position: absol">
+  
+    <link rel="alternative" href="/atom.xml" title="Kenshin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Kenshin</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+					        
+								<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+					        
+								<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 12.5px;">NIO</a> <a href="/tags/Netty/" style="font-size: 15px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/fe/" style="font-size: 10px;">fe</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 12.5px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Kenshin</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/author.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Kenshin</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="GitHub" target="_blank" href="https://github.com/gayyzxyx" title="GitHub">GitHub</a>
+			        
+						<a class="Email" target="_blank" href="/yao.rid@gmail.com" title="Email">Email</a>
+			        
+						<a class="LinkedIn" target="_blank" href="https://www.linkedin.com/in/xin-yao-713b2b78" title="LinkedIn">LinkedIn</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-fe/2016-03-10-modal" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/06/fe/2016-03-10-modal/" class="article-date">
+  	<time datetime="2016-12-05T16:00:00.000Z" itemprop="datePublished">2016-12-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      新建modal，保持背景不可滑动
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fe/">fe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/fe/">fe</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>需要一个模态框，在移动设备上，弹出模态框后，背景不可滑动，并且点击模态背景后，能返回弹出模态框之前的状态，经过一系列实验，以下是比较好的解决方案，在ios和安卓上都试验无问题<br>首先定义模态框的样式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#modal-overlay</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">visibility</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="comment">/* 使用绝对定位或固定定位  */</span></span><br><span class="line">    <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#333</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.9</span></span></span>; <span class="comment">/* 背景半透明 */</span></span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 模态框样式 */</span></span><br><span class="line"><span class="class">.modal-data</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">100px</span> <span class="number">10px</span> <span class="number">100px</span> <span class="number">10px</span> </span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#f8f8f8</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#888888</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">2px</span></span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>jade风格的html代码如下，一个很简单的模态框，默认是隐藏不显示的<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#modal-overlay</span></span><br><span class="line">    <span class="class">.modal-data</span></span><br><span class="line">	    <span class="tag">p</span> 显示内容</span><br></pre></td></tr></table></figure><br>接着js控制代码如下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scrollTopPx;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">overlay</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> e1 = <span class="built_in">document</span>.getElementById(<span class="string">"modal-overlay"</span>);</span><br><span class="line">    <span class="keyword">var</span> scrollTop = $(<span class="built_in">document</span>).scrollTop();</span><br><span class="line">    <span class="keyword">var</span> scrollLeft = $(<span class="built_in">document</span>).scrollLeft();</span><br><span class="line">    scrollTopPx = scrollTop;</span><br><span class="line">    $(<span class="string">"#modal-overlay"</span>).css(&#123; position : <span class="string">'absolute'</span>, <span class="string">'top'</span> : scrollTop, left : scrollLeft &#125;);</span><br><span class="line">    $(<span class="string">"body"</span>).css(&#123;<span class="string">"overflow"</span>:<span class="string">"hidden"</span>, <span class="string">"position"</span>: <span class="string">"fixed"</span>, top: -scrollTop&#125;);</span><br><span class="line">    e1.style.visibility = (e1.style.visibility == <span class="string">"visible"</span>) ? <span class="string">"hidden"</span> : <span class="string">"visible"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).delegate(<span class="string">'body'</span>, <span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.target.id == <span class="string">"modal-overlay"</span>) &#123;</span><br><span class="line">        <span class="built_in">document</span>.getElementById(<span class="string">"modal-overlay"</span>).style.visibility = <span class="string">"hidden"</span>;</span><br><span class="line">        $(<span class="string">"body"</span>).css(&#123;<span class="string">"overflow"</span>:<span class="string">"auto"</span>, <span class="string">"position"</span>:<span class="string">""</span>, <span class="string">"top"</span>: <span class="number">0</span>&#125;);</span><br><span class="line">        $(<span class="string">"body"</span>).scrollTop(scrollTopPx);</span><br><span class="line">        $(<span class="string">"#modal-overlay"</span>).css(&#123; position : <span class="string">'absolute'</span>, <span class="string">'top'</span> : <span class="number">0</span>, left : <span class="number">0</span> &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.target.hasAttribute(<span class="string">"showDetail"</span>)) &#123;</span><br><span class="line">        <span class="keyword">var</span> content = <span class="string">"text modal"</span>;</span><br><span class="line">        $(<span class="string">'#modal-overlay .modal-data p'</span>).text(content);</span><br><span class="line">        overlay();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>需要注意的地方， $(“body”).css({“overflow”:”hidden”, “position”: “fixed”, top: -scrollTop});如果是在电脑的chrome，overflow=hidden既可以完成目的，但是似乎移动设备比如safari并不遵循，因此需要加上position=fixed，但是这时候只是把modal给固定住了，并且背景会移动到最top，为了使背景能和modal在一个层面，需要设置body的top=当前移动像素。最后需要将背景还原，需要将body.scrollTop=触发modal之前的屏幕像素位置。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/31/shell/2016-01-31-ssh-tunnel/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ssh内网穿透</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="fe/2016-03-10-modal" data-title="新建modal，保持背景不可滑动" data-url="http://yoursite.com/2016/12/06/fe/2016-03-10-modal/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Kenshin
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

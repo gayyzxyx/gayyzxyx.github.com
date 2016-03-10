@@ -98,7 +98,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 12.5px;">NIO</a> <a href="/tags/Netty/" style="font-size: 15px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 12.5px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
+						<a href="/tags/BIO/" style="font-size: 12.5px;">BIO</a> <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/NIO/" style="font-size: 12.5px;">NIO</a> <a href="/tags/Netty/" style="font-size: 15px;">Netty</a> <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/awk/" style="font-size: 12.5px;">awk</a> <a href="/tags/bottle/" style="font-size: 10px;">bottle</a> <a href="/tags/crack/" style="font-size: 10px;">crack</a> <a href="/tags/date/" style="font-size: 10px;">date</a> <a href="/tags/django/" style="font-size: 10px;">django</a> <a href="/tags/fe/" style="font-size: 10px;">fe</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/maketrans/" style="font-size: 10px;">maketrans</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/pptp/" style="font-size: 10px;">pptp</a> <a href="/tags/putty/" style="font-size: 10px;">putty</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflection/" style="font-size: 10px;">reflection</a> <a href="/tags/sed/" style="font-size: 12.5px;">sed</a> <a href="/tags/shadowsocks/" style="font-size: 10px;">shadowsocks</a> <a href="/tags/shell/" style="font-size: 20px;">shell</a> <a href="/tags/ssh/" style="font-size: 12.5px;">ssh</a> <a href="/tags/sublime-text2/" style="font-size: 10px;">sublime text2</a> <a href="/tags/thread/" style="font-size: 10px;">thread</a> <a href="/tags/translate/" style="font-size: 10px;">translate</a> <a href="/tags/vpn/" style="font-size: 10px;">vpn</a>
 					</div>
 				</section>
 				
@@ -155,6 +155,68 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-fe/2016-03-10-modal" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/06/fe/2016-03-10-modal/" class="article-date">
+  	<time datetime="2016-12-05T16:00:00.000Z" itemprop="datePublished">2016-12-06</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/06/fe/2016-03-10-modal/">新建modal，保持背景不可滑动</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>需要一个模态框，在移动设备上，弹出模态框后，背景不可滑动，并且点击模态背景后，能返回弹出模态框之前的状态，经过一系列实验，以下是比较好的解决方案，在ios和安卓上都试验无问题<br>首先定义模态框的样式如下：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#modal-overlay</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">visibility</span>:<span class="value"> hidden</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute</span></span>; <span class="comment">/* 使用绝对定位或固定定位  */</span></span><br><span class="line">    <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">top</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">z-index</span>:<span class="value"> <span class="number">1000</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#333</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.9</span></span></span>; <span class="comment">/* 背景半透明 */</span></span><br><span class="line">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 模态框样式 */</span></span><br><span class="line"><span class="class">.modal-data</span> <span class="rules">&#123;</span><br><span class="line">    <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">100px</span> <span class="number">10px</span> <span class="number">100px</span> <span class="number">10px</span> </span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#f8f8f8</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">15px</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#888888</span></span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">text-align</span>:<span class="value"> center</span></span>;</span><br><span class="line">    <span class="rule"><span class="attribute">border-radius</span>:<span class="value"> <span class="number">2px</span></span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>jade风格的html代码如下，一个很简单的模态框，默认是隐藏不显示的<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#modal-overlay</span></span><br><span class="line">    <span class="class">.modal-data</span></span><br><span class="line">	    <span class="tag">p</span> 显示内容</span><br></pre></td></tr></table></figure><br>接着js控制代码如下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> scrollTopPx;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">overlay</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> e1 = <span class="built_in">document</span>.getElementById(<span class="string">"modal-overlay"</span>);</span><br><span class="line">    <span class="keyword">var</span> scrollTop = $(<span class="built_in">document</span>).scrollTop();</span><br><span class="line">    <span class="keyword">var</span> scrollLeft = $(<span class="built_in">document</span>).scrollLeft();</span><br><span class="line">    scrollTopPx = scrollTop;</span><br><span class="line">    $(<span class="string">"#modal-overlay"</span>).css(&#123; position : <span class="string">'absolute'</span>, <span class="string">'top'</span> : scrollTop, left : scrollLeft &#125;);</span><br><span class="line">    $(<span class="string">"body"</span>).css(&#123;<span class="string">"overflow"</span>:<span class="string">"hidden"</span>, <span class="string">"position"</span>: <span class="string">"fixed"</span>, top: -scrollTop&#125;);</span><br><span class="line">    e1.style.visibility = (e1.style.visibility == <span class="string">"visible"</span>) ? <span class="string">"hidden"</span> : <span class="string">"visible"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).delegate(<span class="string">'body'</span>, <span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.target.id == <span class="string">"modal-overlay"</span>) &#123;</span><br><span class="line">        <span class="built_in">document</span>.getElementById(<span class="string">"modal-overlay"</span>).style.visibility = <span class="string">"hidden"</span>;</span><br><span class="line">        $(<span class="string">"body"</span>).css(&#123;<span class="string">"overflow"</span>:<span class="string">"auto"</span>, <span class="string">"position"</span>:<span class="string">""</span>, <span class="string">"top"</span>: <span class="number">0</span>&#125;);</span><br><span class="line">        $(<span class="string">"body"</span>).scrollTop(scrollTopPx);</span><br><span class="line">        $(<span class="string">"#modal-overlay"</span>).css(&#123; position : <span class="string">'absolute'</span>, <span class="string">'top'</span> : <span class="number">0</span>, left : <span class="number">0</span> &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.target.hasAttribute(<span class="string">"showDetail"</span>)) &#123;</span><br><span class="line">        <span class="keyword">var</span> content = <span class="string">"text modal"</span>;</span><br><span class="line">        $(<span class="string">'#modal-overlay .modal-data p'</span>).text(content);</span><br><span class="line">        overlay();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><br>需要注意的地方， $(“body”).css({“overflow”:”hidden”, “position”: “fixed”, top: -scrollTop});如果是在电脑的chrome，overflow=hidden既可以完成目的，但是似乎移动设备比如safari并不遵循，因此需要加上position=fixed，但是这时候只是把modal给固定住了，并且背景会移动到最top，为了使背景能和modal在一个层面，需要设置body的top=当前移动像素。最后需要将背景还原，需要将body.scrollTop=触发modal之前的屏幕像素位置。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fe/">fe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/fe/">fe</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-shell/2016-01-31-ssh-tunnel" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -744,67 +806,6 @@ MultiplexerTimeServer实现Runnable接口，主要是Reactor线程轮训注册�
       
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/java/">java</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-shell/2015-12-28-git-rename" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2015/12/28/shell/2015-12-28-git-rename/" class="article-date">
-  	<time datetime="2015-12-27T16:00:00.000Z" itemprop="datePublished">2015-12-28</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/28/shell/2015-12-28-git-rename/">git一键rename</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有时候需要修改分支名称，但是总是几条命令切来切去麻烦，于是写了个简单的脚本如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> [[ ! <span class="operator">-d</span> <span class="string">".git"</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"不是有效git目录"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$#</span>"</span> <span class="operator">-ne</span> <span class="number">1</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"新分支名必填"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">branch_old=`git status|grep <span class="string">"On branch"</span>|awk <span class="string">'&#123;print $3&#125;'</span>`</span><br><span class="line"><span class="keyword">if</span> [[ <span class="string">"<span class="variable">$branch_old</span>"</span> = <span class="string">"master"</span> ]];<span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">"不能对master操作"</span></span><br><span class="line">	<span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">git branch -m <span class="variable">$branch_old</span> <span class="variable">$1</span></span><br><span class="line">git push origin :<span class="variable">$branch_old</span></span><br><span class="line">git push origin <span class="variable">$1</span></span><br></pre></td></tr></table></figure><br>然后配置到环境变量，需要的时候git-rename branchname即可</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/shell/">shell</a>
 	</div>
 
 
